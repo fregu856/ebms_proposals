@@ -9,7 +9,12 @@ _We derive an efficient and convenient objective that can be employed to train a
 
 If you find this work useful, please consider citing:
 ```
-TODO!
+@article{gustafsson2021learning,
+  title={Learning Proposals for Practical Energy-Based Regression},
+  author={Gustafsson, Fredrik K and Danelljan, Martin and Sch{\"o}n, Thomas B},
+  journal={arXiv preprint arXiv:2110.11948},
+  year={2021}
+}
 ```
 
 
