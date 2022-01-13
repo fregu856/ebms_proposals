@@ -69,4 +69,4 @@ If you find this work useful, please consider citing:
 ***
 ***
 
-Code will be released before the end of 2021.
+Code will be released before the end of February.
