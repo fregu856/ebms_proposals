@@ -39,7 +39,7 @@ for i in range(num_models):
     # if i < 16:
         # continue
 
-    network = ToyNet(model_id + "_%d" % i, project_dir="/root/project5/umal_1dregression").cuda()
+    network = ToyNet(model_id + "_%d" % i, project_dir="/root/ebms_proposals/1dregression_2").cuda()
 
     K = network.noise_net.K
     print (K)

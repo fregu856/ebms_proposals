@@ -19,7 +19,7 @@ batch_size = 32
 model_id = "ebmdn4_train_K4"
 M = 20
 
-network = ToyNet(model_id, project_dir="/root/project5/umal_1dregression").cuda()
+network = ToyNet(model_id, project_dir="/root/ebms_proposals/1dregression_2").cuda()
 
 K = network.noise_net.K
 print (K)
@@ -37,7 +37,7 @@ print ("num_val_batches:", num_val_batches)
 val_loader = torch.utils.data.DataLoader(dataset=val_dataset, batch_size=batch_size, shuffle=False)
 
 for model_i in range(M):
-    network.load_state_dict(torch.load("/root/project5/umal_1dregression/training_logs/model_%s_%d/checkpoints/model_%s_epoch_%d.pth" % (model_id, model_i, model_id, epoch)))
+    network.load_state_dict(torch.load("/root/ebms_proposals/1dregression_2/training_logs/model_%s_%d/checkpoints/model_%s_epoch_%d.pth" % (model_id, model_i, model_id, epoch)))
 
     x_values = []
     means_values = []

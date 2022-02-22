@@ -87,25 +87,25 @@ import pickle
 #                  s=zones[i][1], horizontalalignment='center', fontsize=20, color='grey')
 #
 # plt.legend(loc="lower left", bbox_to_anchor=(0.,0.1))
-# plt.savefig("/root/project5/umal_1dregression/data.png")
+# plt.savefig("/root/ebms_proposals/1dregression_2/data.png")
 #
 # print(x_train_synthetic.shape)
 # print(x_valid_synthetic.shape)
 # print(x_test_synthetic.shape)
 #
-# with open("/root/project5/umal_1dregression/x_train.pkl", "wb") as file:
+# with open("/root/ebms_proposals/1dregression_2/x_train.pkl", "wb") as file:
 #     pickle.dump(x_train_synthetic, file)
-# with open("/root/project5/umal_1dregression/y_train.pkl", "wb") as file:
+# with open("/root/ebms_proposals/1dregression_2/y_train.pkl", "wb") as file:
 #     pickle.dump(y_train_synthetic, file)
 #
-# with open("/root/project5/umal_1dregression/x_val.pkl", "wb") as file:
+# with open("/root/ebms_proposals/1dregression_2/x_val.pkl", "wb") as file:
 #     pickle.dump(x_valid_synthetic, file)
-# with open("/root/project5/umal_1dregression/y_val.pkl", "wb") as file:
+# with open("/root/ebms_proposals/1dregression_2/y_val.pkl", "wb") as file:
 #     pickle.dump(y_valid_synthetic, file)
 #
-# with open("/root/project5/umal_1dregression/x_test.pkl", "wb") as file:
+# with open("/root/ebms_proposals/1dregression_2/x_test.pkl", "wb") as file:
 #     pickle.dump(x_test_synthetic, file)
-# with open("/root/project5/umal_1dregression/y_test.pkl", "wb") as file:
+# with open("/root/ebms_proposals/1dregression_2/y_test.pkl", "wb") as file:
 #     pickle.dump(y_test_synthetic, file)
 # ################################################################################
 
@@ -113,11 +113,11 @@ class ToyDataset(torch.utils.data.Dataset):
     def __init__(self):
         self.examples = []
 
-        with open("/root/project5/umal_1dregression/x_train.pkl", "rb") as file: # (needed for python3)
+        with open("/root/ebms_proposals/1dregression_2/x_train.pkl", "rb") as file: # (needed for python3)
             x = pickle.load(file)
         x = x.astype(np.float32)
 
-        with open("/root/project5/umal_1dregression/y_train.pkl", "rb") as file: # (needed for python3)
+        with open("/root/ebms_proposals/1dregression_2/y_train.pkl", "rb") as file: # (needed for python3)
             y = pickle.load(file)
         y = y.astype(np.float32)
 
@@ -126,7 +126,7 @@ class ToyDataset(torch.utils.data.Dataset):
         plt.ylabel("y")
         plt.xlabel("x")
         plt.ylim([-10.0, 10.0])
-        plt.savefig("/root/project5/umal_1dregression/training_data.png")
+        plt.savefig("/root/ebms_proposals/1dregression_2/training_data.png")
         plt.close(1)
 
         for i in range(x.shape[0]):
@@ -176,11 +176,11 @@ class ToyDatasetTest(torch.utils.data.Dataset):
     def __init__(self):
         self.examples = []
 
-        with open("/root/project5/umal_1dregression/x_test.pkl", "rb") as file: # (needed for python3)
+        with open("/root/ebms_proposals/1dregression_2/x_test.pkl", "rb") as file: # (needed for python3)
             x = pickle.load(file)
         x = x.astype(np.float32)
 
-        with open("/root/project5/umal_1dregression/y_test.pkl", "rb") as file: # (needed for python3)
+        with open("/root/ebms_proposals/1dregression_2/y_test.pkl", "rb") as file: # (needed for python3)
             y = pickle.load(file)
         y = y.astype(np.float32)
 
@@ -189,7 +189,7 @@ class ToyDatasetTest(torch.utils.data.Dataset):
         plt.ylabel("y")
         plt.xlabel("x")
         plt.ylim([-10.0, 10.0])
-        plt.savefig("/root/project5/umal_1dregression/testing_data.png")
+        plt.savefig("/root/ebms_proposals/1dregression_2/testing_data.png")
         plt.close(1)
 
         for i in range(x.shape[0]):
@@ -212,28 +212,5 @@ class ToyDatasetTest(torch.utils.data.Dataset):
     def __len__(self):
         return self.num_examples
 
-# class ToyDatasetEvalKL(torch.utils.data.Dataset):
-#     def __init__(self):
-#         self.examples = []
-#
-#         x = np.linspace(-3.0, 3.0, 2048, dtype=np.float32)
-#
-#         for i in range(x.shape[0]):
-#             example = {}
-#             example["x"] = x[i]
-#             self.examples.append(example)
-#
-#         self.num_examples = len(self.examples)
-#
-#     def __getitem__(self, index):
-#         example = self.examples[index]
-#
-#         x = example["x"]
-#
-#         return (x)
-#
-#     def __len__(self):
-#         return self.num_examples
-
-_ = ToyDataset()
-_ = ToyDatasetTest()
+#_ = ToyDataset()
+#_ = ToyDatasetTest()
