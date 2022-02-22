@@ -1,3 +1,5 @@
+# camera-ready
+
 from datasets import ToyDatasetEvalKL # (this needs to be imported before torch, because cv2 needs to be imported before torch for some reason)
 from ebmdn_model_K4 import ToyNet
 
@@ -19,7 +21,7 @@ batch_size = 32
 model_id = "ebmdn4_train_K4"
 M = 20
 
-network = ToyNet(model_id, project_dir="/root/project5/bmvc_1dregression").cuda()
+network = ToyNet(model_id, project_dir="/root/ebms_proposals/1dregression_1").cuda()
 
 K = network.noise_net.K
 print (K)
@@ -29,7 +31,7 @@ epoch = 75
 num_samples = 2048
 epsilon = 1.0e-30
 
-with open("/root/project5/bmvc_1dregression/gt_x_values_2_scores.pkl", "rb") as file: # (needed for python3)
+with open("/root/ebms_proposals/1dregression_1/gt_x_values_2_scores.pkl", "rb") as file: # (needed for python3)
     gt_x_values_2_scores = pickle.load(file)
 
 val_dataset = ToyDatasetEvalKL()
@@ -41,7 +43,7 @@ val_loader = torch.utils.data.DataLoader(dataset=val_dataset, batch_size=batch_s
 
 KL_values = []
 for model_i in range(M):
-    network.load_state_dict(torch.load("/root/project5/bmvc_1dregression/training_logs/model_%s_%d/checkpoints/model_%s_epoch_%d.pth" % (model_id, model_i, model_id, epoch)))
+    network.load_state_dict(torch.load("/root/ebms_proposals/1dregression_1/training_logs/model_%s_%d/checkpoints/model_%s_epoch_%d.pth" % (model_id, model_i, model_id, epoch)))
 
     x_values = []
     x_values_2_scores = {}

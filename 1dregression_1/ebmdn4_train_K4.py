@@ -1,3 +1,5 @@
+# camera-ready
+
 from datasets import ToyDataset # (this needs to be imported before torch, because cv2 needs to be imported before torch for some reason)
 from ebmdn_model_K4 import ToyNet
 
@@ -36,7 +38,7 @@ train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=bat
 
 num_models = 20
 for i in range(num_models):
-    network = ToyNet(model_id + "_%d" % i, project_dir="/root/project5/bmvc_1dregression").cuda()
+    network = ToyNet(model_id + "_%d" % i, project_dir="/root/ebms_proposals/1dregression_1").cuda()
 
     K = network.noise_net.K
     print (K)
