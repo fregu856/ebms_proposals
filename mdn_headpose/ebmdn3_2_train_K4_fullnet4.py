@@ -40,8 +40,8 @@ for i in range(num_models):
     if i < 19:
         continue
 
-    mdn_network = ToyNet(model_id + "_%d" % i, project_dir="/root/project5/headpose").cuda()
-    ebm_network = ToyNet(model_id + "_%d" % i, project_dir="/root/project5/headpose").cuda()
+    mdn_network = ToyNet(model_id + "_%d" % i, project_dir="/root/ebms_proposals/mdn_headpose").cuda()
+    ebm_network = ToyNet(model_id + "_%d" % i, project_dir="/root/ebms_proposals/mdn_headpose").cuda()
 
     K = mdn_network.noise_net.K
     print (K)

@@ -34,7 +34,7 @@ train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=bat
 
 num_models = 20
 for i in range(num_models):
-    network = ToyNet(model_id + "_%d" % i, project_dir="/root/project5/headpose").cuda()
+    network = ToyNet(model_id + "_%d" % i, project_dir="/root/ebms_proposals/mdn_headpose").cuda()
 
     K = network.noise_net.K
     print (K)
