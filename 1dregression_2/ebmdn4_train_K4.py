@@ -1,3 +1,5 @@
+# camera-ready
+
 from datasets import ToyDataset # (this needs to be imported before torch, because cv2 needs to be imported before torch for some reason)
 from ebmdn_model_K4 import ToyNet
 
