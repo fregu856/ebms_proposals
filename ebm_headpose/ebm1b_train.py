@@ -1,3 +1,5 @@
+# camera-ready
+
 from datasets import DatasetTrainAug # (this needs to be imported before torch, because cv2 needs to be imported before torch for some reason)
 from ebmdn_model_K4 import ToyNet
 
@@ -79,7 +81,7 @@ train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=bat
 
 num_models = 20
 for i in range(num_models):
-    network = ToyNet(model_id + "_%d" % i, project_dir="/root/project5/ebm_headpose").cuda()
+    network = ToyNet(model_id + "_%d" % i, project_dir="/root/ebms_proposals/ebm_headpose").cuda()
 
     optimizer = torch.optim.Adam(network.parameters(), lr=learning_rate)
 

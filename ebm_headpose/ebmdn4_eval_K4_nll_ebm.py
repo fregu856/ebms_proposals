@@ -1,3 +1,5 @@
+# camera-ready
+
 from datasets import DatasetTest # (this needs to be imported before torch, because cv2 needs to be imported before torch for some reason)
 from ebmdn_model_K4 import ToyNet
 
@@ -20,7 +22,7 @@ batch_size = 32
 model_id = "ebmdn4_train_K4"
 M = 20
 
-network = ToyNet(model_id, project_dir="/root/project5/ebm_headpose").cuda()
+network = ToyNet(model_id, project_dir="/root/ebms_proposals/ebm_headpose").cuda()
 
 epoch = 75
 
@@ -50,7 +52,7 @@ print (y_samples.size())
 
 mnlls = []
 for model_i in range(M):
-    network.load_state_dict(torch.load("/root/project5/ebm_headpose/training_logs/model_%s_%d/checkpoints/model_%s_epoch_%d.pth" % (model_id, model_i, model_id, epoch)))
+    network.load_state_dict(torch.load("/root/ebms_proposals/ebm_headpose/training_logs/model_%s_%d/checkpoints/model_%s_epoch_%d.pth" % (model_id, model_i, model_id, epoch)))
 
     nll_values = []
     network.eval() # (set in eval mode, this affects BatchNorm and dropout)
