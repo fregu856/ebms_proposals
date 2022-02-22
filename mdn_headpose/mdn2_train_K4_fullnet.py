@@ -1,3 +1,5 @@
+# camera-ready
+
 from datasets import DatasetTrainAug # (this needs to be imported before torch, because cv2 needs to be imported before torch for some reason)
 from mdn_model_K4 import ToyNet
 
@@ -72,15 +74,12 @@ for i in range(num_models):
             q_distr = torch.distributions.normal.Normal(loc=means, scale=sigmas)
             # q_ys_K = torch.exp(q_distr.log_prob(ys.unsqueeze(2)).sum(1)) # (shape: (batch_size, K)
             # q_ys = torch.sum(weights*q_ys_K, dim=1) # (shape: (batch_size))
-
             log_q_ys_K = q_distr.log_prob(ys.unsqueeze(2)).sum(1) # (shape: (batch_size, K)
             log_q_ys = torch.logsumexp(torch.log(weights) + log_q_ys_K, dim=1) # (shape: (batch_size))
 
             ########################################################################
             # compute loss:
             ########################################################################
-            # q_ys = F.relu(q_ys - 1.0e-6) + 1.0e-6
-
             # loss = torch.mean(-torch.log(q_ys))
             loss = torch.mean(-log_q_ys)
 

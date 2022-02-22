@@ -1,3 +1,5 @@
+# camera-ready
+
 from datasets import DatasetTrainAug # (this needs to be imported before torch, because cv2 needs to be imported before torch for some reason)
 from mdn_model_K16 import ToyNet
 
@@ -34,9 +36,6 @@ train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=bat
 
 num_models = 20
 for i in range(num_models):
-    if i < 18:
-        continue
-
     network = ToyNet(model_id + "_%d" % i, project_dir="/root/ebms_proposals/mdn_headpose").cuda()
 
     K = network.noise_net.K
@@ -73,20 +72,12 @@ for i in range(num_models):
             sigmas = sigmas.view(-1, 3, K) # (shape: (batch_size, 3, K))
 
             q_distr = torch.distributions.normal.Normal(loc=means, scale=sigmas)
-            # q_ys_K = torch.exp(q_distr.log_prob(ys.unsqueeze(2)).sum(1)) # (shape: (batch_size, K)
-            # q_ys = torch.sum(weights*q_ys_K, dim=1) # (shape: (batch_size))
-
             log_q_ys_K = q_distr.log_prob(ys.unsqueeze(2)).sum(1) # (shape: (batch_size, K)
             log_q_ys = torch.logsumexp(torch.log(weights) + log_q_ys_K, dim=1) # (shape: (batch_size))
 
             ########################################################################
             # compute loss:
             ########################################################################
-            # q_ys = F.relu(q_ys - 1.0e-6) + 1.0e-6
-
-            # loss = torch.mean(-torch.log(q_ys))
-            # loss = torch.mean(-log_q_ys)
-
             # (without this fix, the loss very often becomes nan)
             if epoch < 1:
                 mixture_means = torch.sum(weights.unsqueeze(1)*means, dim=2) # (shape: (batch_size, 3))
