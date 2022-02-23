@@ -1,3 +1,5 @@
+# camera-ready
+
 from datasets import DatasetTrain # (this needs to be imported before torch, because cv2 needs to be imported before torch for some reason)
 from mdn_model_K4 import ToyNet
 
@@ -71,8 +73,6 @@ for i in range(num_models):
             ########################################################################
             # compute loss:
             ########################################################################
-            q_ys = F.relu(q_ys - 1.0e-6) + 1.0e-6
-
             loss = torch.mean(-torch.log(q_ys))
 
             loss_value = loss.data.cpu().numpy()
