@@ -1,3 +1,5 @@
+# camera-ready
+
 from datasets import DatasetTest # (this needs to be imported before torch, because cv2 needs to be imported before torch for some reason)
 from mdn_model_K4 import ToyNet
 
@@ -49,22 +51,14 @@ for model_i in range(M):
             sigmas = torch.exp(log_sigma2s/2.0) # (shape: (batch_size, K))
 
             q_distr = torch.distributions.normal.Normal(loc=means, scale=sigmas)
-            q_ys_K = torch.exp(q_distr.log_prob(torch.transpose(ys, 1, 0).unsqueeze(2))) # (shape: (1, batch_size, K))
-            q_ys = torch.sum(weights.unsqueeze(0)*q_ys_K, dim=2) # (shape: (1, batch_size))
-            q_ys = q_ys.squeeze(0) # (shape: (batch_size))
-            q_ys = F.relu(q_ys - 1.0e-6) + 1.0e-6
+            # q_ys_K = torch.exp(q_distr.log_prob(torch.transpose(ys, 1, 0).unsqueeze(2))) # (shape: (1, batch_size, K))
+            # q_ys = torch.sum(weights.unsqueeze(0)*q_ys_K, dim=2) # (shape: (1, batch_size))
+            # q_ys = q_ys.squeeze(0) # (shape: (batch_size))
+            log_q_ys_K = q_distr.log_prob(torch.transpose(ys, 1, 0).unsqueeze(2)).squeeze(0) # (shape: (batch_size, K))
+            log_q_ys = torch.logsumexp(torch.log(weights) + log_q_ys_K, dim=1) # (shape: (batch_size))
 
-            nlls = -torch.log(q_ys) # (shape: (batch_size))
-
-            # q_distr = torch.distributions.normal.Normal(loc=means, scale=sigmas)
-            # # q_ys_K = torch.exp(q_distr.log_prob(torch.transpose(ys, 1, 0).unsqueeze(2))) # (shape: (1, batch_size, K))
-            # # q_ys = torch.sum(weights.unsqueeze(0)*q_ys_K, dim=2) # (shape: (1, batch_size))
-            # # q_ys = q_ys.squeeze(0) # (shape: (batch_size))
-            # log_q_ys_K = q_distr.log_prob(torch.transpose(ys, 1, 0).unsqueeze(2)).squeeze(0) # (shape: (batch_size, K))
-            # log_q_ys = torch.logsumexp(torch.log(weights) + log_q_ys_K, dim=1) # (shape: (batch_size))
-            #
-            # # nlls = -torch.log(q_ys) # (shape: (batch_size))
-            # nlls = -log_q_ysq_ys
+            # nlls = -torch.log(q_ys) # (shape: (batch_size))
+            nlls = -log_q_ysq_ys
 
             nlls = nlls.data.cpu().numpy() # (shape: (batch_size, ))
             nll_values += list(nlls)
