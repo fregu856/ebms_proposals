@@ -21,11 +21,11 @@ import cv2
 # ################################################################################
 # import os
 #
-# img_filenames = os.listdir("/root/project5/cells/Cell200")
+# img_filenames = os.listdir("/root/ebms_proposals/ebm_cell/Cell200")
 # print (img_filenames)
 # print (len(img_filenames))
 #
-# img = cv2.imread("/root/project5/cells/Cell200/" + img_filenames[0], -1)
+# img = cv2.imread("/root/ebms_proposals/ebm_cell/Cell200/" + img_filenames[0], -1)
 # print (img)
 # print (img.shape)
 # print (img.dtype)
@@ -54,7 +54,7 @@ import cv2
 #
 # labels_train = []
 # for (i, img_filename) in enumerate(img_filenames_train):
-#     img = cv2.imread("/root/project5/cells/Cell200/" + img_filename, -1)
+#     img = cv2.imread("/root/ebms_proposals/ebm_cell/Cell200/" + img_filename, -1)
 #     images_train[i] = img
 #
 #     label = float(img_filename.split("_")[1].split(".0.")[0])
@@ -63,7 +63,7 @@ import cv2
 #
 # labels_test = []
 # for (i, img_filename) in enumerate(img_filenames_test):
-#     img = cv2.imread("/root/project5/cells/Cell200/" + img_filename, -1)
+#     img = cv2.imread("/root/ebms_proposals/ebm_cell/Cell200/" + img_filename, -1)
 #     images_test[i] = img
 #
 #     label = float(img_filename.split("_")[1].split(".0.")[0])
@@ -75,22 +75,22 @@ import cv2
 # print (labels_test.shape)
 # print (images_test.shape)
 #
-# with open("/root/project5/cells/labels_train.pkl", "wb") as file:
+# with open("/root/ebms_proposals/ebm_cell/labels_train.pkl", "wb") as file:
 #     pickle.dump(labels_train, file)
-# with open("/root/project5/cells/images_train.pkl", "wb") as file:
+# with open("/root/ebms_proposals/ebm_cell/images_train.pkl", "wb") as file:
 #     pickle.dump(images_train, file)
 #
-# with open("/root/project5/cells/labels_test.pkl", "wb") as file:
+# with open("/root/ebms_proposals/ebm_cell/labels_test.pkl", "wb") as file:
 #     pickle.dump(labels_test, file)
-# with open("/root/project5/cells/images_test.pkl", "wb") as file:
+# with open("/root/ebms_proposals/ebm_cell/images_test.pkl", "wb") as file:
 #     pickle.dump(images_test, file)
 # ################################################################################
 
 class DatasetTrain(torch.utils.data.Dataset):
     def __init__(self):
-        with open("/root/project5/cells/labels_train.pkl", "rb") as file: # (needed for python3)
+        with open("/root/ebms_proposals/ebm_cell/labels_train.pkl", "rb") as file: # (needed for python3)
             self.labels = pickle.load(file)
-        with open("/root/project5/cells/images_train.pkl", "rb") as file: # (needed for python3)
+        with open("/root/ebms_proposals/ebm_cell/images_train.pkl", "rb") as file: # (needed for python3)
             self.imgs = pickle.load(file)
 
         print (self.labels.shape)
@@ -109,7 +109,7 @@ class DatasetTrain(torch.utils.data.Dataset):
         img = np.expand_dims(img, axis=2) # (shape: (64, 64, 1))
         img = img*np.ones((img.shape[0], img.shape[1], 3), dtype=img.dtype) # (shape: (64, 64, 3))
 
-        # cv2.imwrite("/root/project5/cells/%d_%f.png" % (index, angle), img)
+        # cv2.imwrite("/root/ebms_proposals/ebm_cell/%d_%f.png" % (index, angle), img)
 
         img = img/255.0
         img = img - np.array([0.485, 0.456, 0.406])
@@ -124,9 +124,9 @@ class DatasetTrain(torch.utils.data.Dataset):
 
 class DatasetTest(torch.utils.data.Dataset):
     def __init__(self):
-        with open("/root/project5/cells/labels_test.pkl", "rb") as file: # (needed for python3)
+        with open("/root/ebms_proposals/ebm_cell/labels_test.pkl", "rb") as file: # (needed for python3)
             self.labels = pickle.load(file)
-        with open("/root/project5/cells/images_test.pkl", "rb") as file: # (needed for python3)
+        with open("/root/ebms_proposals/ebm_cell/images_test.pkl", "rb") as file: # (needed for python3)
             self.imgs = pickle.load(file)
 
         print (self.labels.shape)
