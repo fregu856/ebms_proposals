@@ -36,8 +36,8 @@ train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=bat
 
 num_models = 20
 for i in range(num_models):
-    mdn_network = ToyNet(model_id + "_%d" % i, project_dir="/root/project5/steeringangle").cuda()
-    ebm_network = ToyNet(model_id + "_%d" % i, project_dir="/root/project5/steeringangle").cuda()
+    mdn_network = ToyNet(model_id + "_%d" % i, project_dir="/root/ebms_proposals/mdn_steering").cuda()
+    ebm_network = ToyNet(model_id + "_%d" % i, project_dir="/root/ebms_proposals/mdn_steering").cuda()
 
     K = mdn_network.noise_net.K
     print (K)
