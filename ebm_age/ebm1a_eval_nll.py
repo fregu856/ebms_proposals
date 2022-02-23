@@ -1,3 +1,5 @@
+# camera-ready
+
 from datasets import DatasetTest # (this needs to be imported before torch, because cv2 needs to be imported before torch for some reason)
 from ebmdn_model_K4 import ToyNet
 
@@ -55,7 +57,6 @@ for model_i in range(M):
             scores_gt = network.predictor_net(x_features, ys) # (shape: (batch_size, 1))
             scores_gt = scores_gt.squeeze(1) # (shape: (batch_size))
 
-            # p_ys = torch.exp(scores_gt)/(200*torch.mean(torch.exp(scores), dim=1)) # (shape: (batch_size))
             log_p_ys = scores_gt - torch.logsumexp(scores, dim=1) - math.log(59) + math.log(num_samples) # (shape: (batch_size))
             p_ys = torch.exp(log_p_ys)
 
@@ -68,16 +69,6 @@ for model_i in range(M):
     mnlls.append(mnll)
     print ("mnll: %g" % mnll)
 
-print (mnlls)
-print ("mnll: %g +/- %g" % (np.mean(np.array(mnlls)), np.std(np.array(mnlls))))
-mnlls.sort()
-print (mnlls[0:5])
-print ("mnll top 5: %g +/- %g" % (np.mean(np.array(mnlls[0:5])), np.std(np.array(mnlls[0:5]))))
-print (mnlls[0:10])
-print ("mnll top 10: %g +/- %g" % (np.mean(np.array(mnlls[0:10])), np.std(np.array(mnlls[0:10]))))
-
-print ("####")
-mnlls = list(np.array(mnlls)[~np.isnan(mnlls)])
 print (mnlls)
 print ("mnll: %g +/- %g" % (np.mean(np.array(mnlls)), np.std(np.array(mnlls))))
 mnlls.sort()

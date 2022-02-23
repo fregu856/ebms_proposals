@@ -56,8 +56,7 @@ for model_i in range(M):
 
             scores_gt = network.predictor_net(x_features, ys) # (shape: (batch_size, 1))
             scores_gt = scores_gt.squeeze(1) # (shape: (batch_size))
-
-            # p_ys = torch.exp(scores_gt)/(200*torch.mean(torch.exp(scores), dim=1)) # (shape: (batch_size))
+            
             log_p_ys = scores_gt - torch.logsumexp(scores, dim=1) - math.log(200) + math.log(num_samples) # (shape: (batch_size))
             p_ys = torch.exp(log_p_ys)
 
