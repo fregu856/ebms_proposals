@@ -20,7 +20,7 @@ import cv2
 # # run this once to generate the training data:
 # ################################################################################
 # import h5py
-# hf = h5py.File("/root/project5/utkface64/UTKFace_64x64.h5", 'r')
+# hf = h5py.File("/root/ebms_proposals/mdn_age/UTKFace_64x64.h5", 'r')
 # labels = hf['labels'][:]
 # labels = labels.astype(np.float32)
 # images = hf['images'][:]
@@ -60,22 +60,22 @@ import cv2
 # print (labels_test.shape)
 # print (images_test.shape)
 #
-# with open("/root/project5/utkface64/labels_train.pkl", "wb") as file:
+# with open("/root/ebms_proposals/mdn_age/labels_train.pkl", "wb") as file:
 #     pickle.dump(labels_train, file)
-# with open("/root/project5/utkface64/images_train.pkl", "wb") as file:
+# with open("/root/ebms_proposals/mdn_age/images_train.pkl", "wb") as file:
 #     pickle.dump(images_train, file)
 #
-# with open("/root/project5/utkface64/labels_test.pkl", "wb") as file:
+# with open("/root/ebms_proposals/mdn_age/labels_test.pkl", "wb") as file:
 #     pickle.dump(labels_test, file)
-# with open("/root/project5/utkface64/images_test.pkl", "wb") as file:
+# with open("/root/ebms_proposals/mdn_age/images_test.pkl", "wb") as file:
 #     pickle.dump(images_test, file)
 # ################################################################################
 
 class DatasetTrain(torch.utils.data.Dataset):
     def __init__(self):
-        with open("/root/project5/utkface64/labels_train.pkl", "rb") as file: # (needed for python3)
+        with open("/root/ebms_proposals/mdn_age/labels_train.pkl", "rb") as file: # (needed for python3)
             self.labels = pickle.load(file)
-        with open("/root/project5/utkface64/images_train.pkl", "rb") as file: # (needed for python3)
+        with open("/root/ebms_proposals/mdn_age/images_train.pkl", "rb") as file: # (needed for python3)
             self.imgs = pickle.load(file)
 
         print (self.labels.shape)
@@ -103,9 +103,9 @@ class DatasetTrain(torch.utils.data.Dataset):
 
 class DatasetTest(torch.utils.data.Dataset):
     def __init__(self):
-        with open("/root/project5/utkface64/labels_test.pkl", "rb") as file: # (needed for python3)
+        with open("/root/ebms_proposals/mdn_age/labels_test.pkl", "rb") as file: # (needed for python3)
             self.labels = pickle.load(file)
-        with open("/root/project5/utkface64/images_test.pkl", "rb") as file: # (needed for python3)
+        with open("/root/ebms_proposals/mdn_age/images_test.pkl", "rb") as file: # (needed for python3)
             self.imgs = pickle.load(file)
 
         print (self.labels.shape)
