@@ -1,3 +1,5 @@
+# camera-ready
+
 from datasets import DatasetTest # (this needs to be imported before torch, because cv2 needs to be imported before torch for some reason)
 from ebmdn_model_K4 import ToyNet
 
@@ -47,14 +49,6 @@ for model_i in range(M):
             x_features = network.feature_net(xs) # (shape: (batch_size, hidden_dim))
             means, log_sigma2s, weights = network.noise_net(x_features) # (all have shape: (batch_size, K))
             sigmas = torch.exp(log_sigma2s/2.0) # (shape: (batch_size, K))
-
-            # q_distr = torch.distributions.normal.Normal(loc=means, scale=sigmas)
-            # q_ys_K = torch.exp(q_distr.log_prob(torch.transpose(ys, 1, 0).unsqueeze(2))) # (shape: (1, batch_size, K))
-            # q_ys = torch.sum(weights.unsqueeze(0)*q_ys_K, dim=2) # (shape: (1, batch_size))
-            # q_ys = q_ys.squeeze(0) # (shape: (batch_size))
-            # q_ys = F.relu(q_ys - 1.0e-6) + 1.0e-6
-            #
-            # nlls = -torch.log(q_ys) # (shape: (batch_size))
 
             q_distr = torch.distributions.normal.Normal(loc=means, scale=sigmas)
             # q_ys_K = torch.exp(q_distr.log_prob(torch.transpose(ys, 1, 0).unsqueeze(2))) # (shape: (1, batch_size, K))

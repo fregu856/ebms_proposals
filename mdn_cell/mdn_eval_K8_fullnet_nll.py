@@ -1,3 +1,5 @@
+# camera-ready
+
 from datasets import DatasetTest # (this needs to be imported before torch, because cv2 needs to be imported before torch for some reason)
 from mdn_model_K8 import ToyNet
 
@@ -48,14 +50,6 @@ for model_i in range(M):
             means, log_sigma2s, weights = network.noise_net(x_features) # (all have shape: (batch_size, K))
             sigmas = torch.exp(log_sigma2s/2.0) # (shape: (batch_size, K))
 
-            # q_distr = torch.distributions.normal.Normal(loc=means, scale=sigmas)
-            # q_ys_K = torch.exp(q_distr.log_prob(torch.transpose(ys, 1, 0).unsqueeze(2))) # (shape: (1, batch_size, K))
-            # q_ys = torch.sum(weights.unsqueeze(0)*q_ys_K, dim=2) # (shape: (1, batch_size))
-            # q_ys = q_ys.squeeze(0) # (shape: (batch_size))
-            # q_ys = F.relu(q_ys - 1.0e-6) + 1.0e-6
-            #
-            # nlls = -torch.log(q_ys) # (shape: (batch_size))
-
             q_distr = torch.distributions.normal.Normal(loc=means, scale=sigmas)
             # q_ys_K = torch.exp(q_distr.log_prob(torch.transpose(ys, 1, 0).unsqueeze(2))) # (shape: (1, batch_size, K))
             # q_ys = torch.sum(weights.unsqueeze(0)*q_ys_K, dim=2) # (shape: (1, batch_size))
@@ -73,16 +67,6 @@ for model_i in range(M):
     mnlls.append(mnll)
     print ("mnll: %g" % mnll)
 
-print (mnlls)
-print ("mnll: %g +/- %g" % (np.mean(np.array(mnlls)), np.std(np.array(mnlls))))
-mnlls.sort()
-print (mnlls[0:5])
-print ("mnll top 5: %g +/- %g" % (np.mean(np.array(mnlls[0:5])), np.std(np.array(mnlls[0:5]))))
-print (mnlls[0:10])
-print ("mnll top 10: %g +/- %g" % (np.mean(np.array(mnlls[0:10])), np.std(np.array(mnlls[0:10]))))
-
-print ("####")
-mnlls = list(np.array(mnlls)[~np.isnan(mnlls)])
 print (mnlls)
 print ("mnll: %g +/- %g" % (np.mean(np.array(mnlls)), np.std(np.array(mnlls))))
 mnlls.sort()
