@@ -1,3 +1,5 @@
+# camera-ready
+
 from datasets import DatasetTest # (this needs to be imported before torch, because cv2 needs to be imported before torch for some reason)
 from ebmdn_model_K4 import ToyNet
 
@@ -71,16 +73,6 @@ for model_i in range(M):
     mnlls.append(mnll)
     print ("mnll: %g" % mnll)
 
-print (mnlls)
-print ("mnll: %g +/- %g" % (np.mean(np.array(mnlls)), np.std(np.array(mnlls))))
-mnlls.sort()
-print (mnlls[0:5])
-print ("mnll top 5: %g +/- %g" % (np.mean(np.array(mnlls[0:5])), np.std(np.array(mnlls[0:5]))))
-print (mnlls[0:10])
-print ("mnll top 10: %g +/- %g" % (np.mean(np.array(mnlls[0:10])), np.std(np.array(mnlls[0:10]))))
-
-print ("####")
-mnlls = list(np.array(mnlls)[~np.isnan(mnlls)])
 print (mnlls)
 print ("mnll: %g +/- %g" % (np.mean(np.array(mnlls)), np.std(np.array(mnlls))))
 mnlls.sort()

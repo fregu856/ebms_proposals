@@ -1,3 +1,5 @@
+# camera-ready
+
 from datasets import DatasetTrain # (this needs to be imported before torch, because cv2 needs to be imported before torch for some reason)
 from ebmdn_model_K4 import ToyNet
 
@@ -36,9 +38,6 @@ train_loader = torch.utils.data.DataLoader(dataset=train_dataset, batch_size=bat
 
 num_models = 20
 for i in range(num_models):
-    if i < 11:
-        continue
-
     network = ToyNet(model_id + "_%d" % i, project_dir="/root/ebms_proposals/ebm_cell").cuda()
 
     K = network.noise_net.K
@@ -94,14 +93,12 @@ for i in range(num_models):
             ########################################################################
             # compute loss:
             ########################################################################
-            q_ys = F.relu(q_ys - 1.0e-6) + 1.0e-6
-
             f_samples = scores_samples
             p_N_samples = q_y_samples.detach()
             f_0 = scores_gt
             p_N_0 = q_ys.detach()
-            exp_vals_0 = f_0-torch.log(p_N_0 + 0.0)
-            exp_vals_samples = f_samples-torch.log(p_N_samples + 0.0)
+            exp_vals_0 = f_0-torch.log(p_N_0)
+            exp_vals_samples = f_samples-torch.log(p_N_samples)
             exp_vals = torch.cat([exp_vals_0.unsqueeze(1), exp_vals_samples], dim=1)
             loss_ebm_nce = -torch.mean(exp_vals_0 - torch.logsumexp(exp_vals, dim=1))
 
